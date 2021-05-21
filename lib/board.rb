@@ -44,14 +44,14 @@ class Board
     end
 
     if @board[row(layer)][column(num)] != '.'
-      position(num, layer + 1)
+      position(num, choice,  layer + 1)
     else
       @board[row(layer)][column(num)] = choice
     end
   end
 end
 
-# board = Board.new
-# board.position(7)
-# board.position(7)
-# board.show
+board = Board.new
+board.position(7, 'x')
+board.position(7, 'x')
+board.show
