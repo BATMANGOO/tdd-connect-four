@@ -2,8 +2,8 @@
 require_relative 'board'
 require_relative 'player'
 
-class Game 
-  attr_accessor :first_player, :second_player, :current_player, :board
+class Game
+  attr_accessor :first_player, :second_player, :current_player
 
   def initialize(board = Board.new)
     @board = board
@@ -14,7 +14,7 @@ class Game
 
   def create_game
     combatents
-    board.show
+    @board.show
     play_turns
     result
   end
@@ -27,13 +27,14 @@ class Game
   end
 
   def turn(number)
-    board.position(number, current_player.choice)
-    board.show
+    choice = valid_input(number)
+    @board.position(choice, current_player.choice)
+    @board.show
   end
 
   def play_turns
     @current_player = first_player
-    until board.full?
+    until @board.full?
       puts "#{current_player.name} please pick a position on the board!"
       position = gets.chomp.to_i
       turn(position)
@@ -60,11 +61,41 @@ class Game
     input
   end
 
+  def valid_input(number) #work on this
+    input = number
+    unless input =~ /[1-7]/
+      puts 'Please pick a number ranging from 1-7'
+      input = gets.chomp
+      valid_input(input)
+    end 
+    input
+  end
+
   def switch_players
     if current_player == first_player
       @current_player = second_player
     else
       @current_player = first_player
+    end
+  end
+
+  def result
+    if @board.game_over?
+      puts "Yay #{current_player.name} has come out victorious!"
+    else
+      puts 'Tie game!'
+    end
+    play_again?
+  end
+
+  def play_again?
+    puts 'Would you like to play again? y or n?'
+    input = gets.chomp.downcase
+    if input == 'y'
+      @board = Board.new
+      create_game
+    else
+      puts 'Thanks for playing!'
     end
   end
 end

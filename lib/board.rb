@@ -8,14 +8,7 @@ class Board
   attr_accessor :board
 
   def initialize
-    @board = [
-      ['.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.'],
-      ['.', '.', '.', '.', '.', '.', '.']
-    ]
+    @board = Array.new(6) { Array.new(7, '.') }
   end
 
   def show
@@ -47,7 +40,7 @@ class Board
   end
 
   def game_over?
-    true || false
+    board.each { }
   end
 
   private
@@ -58,6 +51,6 @@ class Board
   end
 
   def column(num)
-    num - 1
+    (num - 1)
   end
 end
