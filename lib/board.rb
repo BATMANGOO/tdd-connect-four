@@ -5,7 +5,8 @@
 # [29, 30, 31, 32, 34, 35, 36]
 # [37, 38, 39, 40, 41, 42, 43]
 class Board
-  attr_reader :board
+  attr_accessor :board
+
   def initialize
     @board = [
       ['.', '.', '.', '.', '.', '.', '.'],
@@ -28,6 +29,29 @@ class Board
     HEREDOC
   end
 
+  def position(num, choice, layer = 1)
+    if layer > 6
+      puts 'This column is full'
+      return
+    end
+
+    if @board[row(layer)][column(num)] != '.'
+      position(num, choice, layer + 1)
+    else
+      @board[row(layer)][column(num)] = choice
+    end
+  end
+
+  def full?
+    board.all? { |row| row.none? { |cell| cell == '.' } }
+  end
+
+  def game_over?
+    true || false
+  end
+
+  private
+
   def row(layer)
     row = board.length
     row - layer
@@ -36,22 +60,4 @@ class Board
   def column(num)
     num - 1
   end
-
-  def position(num, choice, layer = 1)
-    if layer > 6
-      puts 'This column is full'
-      return
-    end
-
-    if @board[row(layer)][column(num)] != '.'
-      position(num, choice,  layer + 1)
-    else
-      @board[row(layer)][column(num)] = choice
-    end
-  end
 end
-
-board = Board.new
-board.position(7, 'x')
-board.position(7, 'x')
-board.show

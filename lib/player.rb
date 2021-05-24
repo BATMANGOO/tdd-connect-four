@@ -1,6 +1,8 @@
 class Player
-  def initialize(name, color)
+  attr_accessor :name, :choice
+  
+  def initialize(name, choice)
     @name = name
-    @color = color
+    @choice = choice
   end
 end
