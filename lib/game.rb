@@ -3,7 +3,7 @@ require_relative 'board'
 require_relative 'player'
 
 class Game
-  attr_accessor :first_player, :second_player, :current_player
+  attr_accessor :first_player, :second_player, :current_player, :board
 
   def initialize(board = Board.new)
     @board = board
@@ -63,7 +63,7 @@ class Game
 
   def valid_input(number) #work on this
     input = number.to_i
-    until input.positive? && input <= 7 && input != ''
+    unless input.positive? && input <= 7
       puts 'Please enter a number ranging from 1-7'
       input = gets.chomp.to_i
       valid_input(input)
@@ -99,6 +99,3 @@ class Game
     end
   end
 end
-
-game = Game.new
-game.create_game
