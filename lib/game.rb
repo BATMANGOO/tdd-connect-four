@@ -52,7 +52,7 @@ class Game
   private
 
   def choice_input(duplicate_choice)
-    puts 'and your weapon of choice?'
+    puts 'and your weapon of choice? (choose a letter)'
     input = gets.chomp.downcase
     while input == duplicate_choice
       puts 'That weapon is taken, please choose another.'
