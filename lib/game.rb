@@ -38,7 +38,7 @@ class Game
       puts "#{current_player.name} please pick a position on the board!"
       position = gets.chomp.to_i
       turn(position)
-      # break if board.game_over?
+      break if @board.game_over?
 
       @current_player = switch_players
     end
@@ -62,13 +62,13 @@ class Game
   end
 
   def valid_input(number) #work on this
-    input = number
-    unless input =~ /[1-7]/
-      puts 'Please pick a number ranging from 1-7'
-      input = gets.chomp
+    input = number.to_i
+    until input.positive? && input <= 7 && input != ''
+      puts 'Please enter a number ranging from 1-7'
+      input = gets.chomp.to_i
       valid_input(input)
-    end 
-    input
+    end
+    input.to_i
   end
 
   def switch_players

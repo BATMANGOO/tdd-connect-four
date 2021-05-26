@@ -56,4 +56,77 @@ describe Board do
       end
     end
   end
+
+  describe '#game_over?' do
+    let(:board) { described_class.new }
+    context 'when horizontal match is found' do
+      before do
+        board.instance_variable_set(:@board, [
+          [".", ".", ".", "x", "x", "x", "x"],
+          [".", ".", ".", ".", ".", ".", "."],
+          [".", ".", ".", ".", ".", ".", "."],
+          [".", ".", ".", ".", ".", ".", "."],
+          ["o", "o", "o", ".", ".", ".", "."],
+          [".", "x", ".", "x", ".", "x", "x"]
+    ])
+      end
+      it 'returns true' do
+        expect(board).to be_game_over
+      end
+    end
+
+    context 'when vertical match is found' do
+      before do
+        board.instance_variable_set(:@board, [
+          [".", ".", ".", ".", ".", ".", "."],
+          ["o", ".", ".", ".", ".", ".", "."],
+          ["o", ".", ".", ".", ".", ".", "o"],
+          ["o", ".", ".", ".", ".", ".", "o"],
+          ["x", "o", "o", ".", ".", ".", "o"],
+          ["x", ".", ".", ".", ".", ".", "o"]
+    ])
+        allow(board).to receive(:four_in_a_row?).and_return(false)
+      end
+      it 'returns true' do
+        expect(board).to be_game_over
+      end
+    end
+
+    context 'when diagonal matches from left' do
+      before do
+        board.instance_variable_set(:@board, [
+          [".", ".", ".", ".", ".", ".", "."],
+          [".", "x", ".", ".", ".", ".", "."],
+          ["x", ".", "x", ".", ".", ".", "."],
+          [".", "x", ".", "x", ".", ".", "."],
+          [".", ".", "x", ".", ".", ".", "."],
+          [".", ".", ".", "x", ".", ".", "."]
+    ])
+        allow(board).to receive(:four_in_a_row?).and_return(false)
+        allow(board).to receive(:four_in_a_column?).and_return(false)
+      end
+
+      it 'returns true' do
+        expect(board).to be_game_over
+      end
+    end
+
+    context 'when diagonal matches from right' do
+      before do
+        board.instance_variable_set(:@board, [
+          [".", ".", ".", ".", ".", ".", "."],
+          [".", ".", ".", ".", ".", "x", "."],
+          [".", ".", ".", ".", "x", ".", "x"],
+          [".", ".", ".", "x", ".", "x", "."],
+          [".", ".", ".", ".", "x", ".", "."],
+          [".", ".", ".", "x", ".", ".", "."]
+    ])
+        allow(board).to receive(:four_in_a_row?).and_return(false)
+        allow(board).to receive(:four_in_a_column?).and_return(false)
+      end
+      it 'returns true' do
+        expect(board).to be_game_over
+      end
+    end
+  end
 end
